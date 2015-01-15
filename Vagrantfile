@@ -12,9 +12,18 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/trusty64"
-  config.vm.provision :shell, path: "vagrant_bootstrap.sh"
+  config.vm.box = "egn"
+  #config.vm.provision :shell, path: "vagrant_bootstrap.sh"
   config.vm.network :forwarded_port, host: 3001, guest: 3001
+  config.vm.provision "shell", inline: <<-SHELL
+    nohup /opt/mongodb-linux-x86_64-2.6.7/bin/mongod &
+    nohup /usr/local/bin/redis-server &
+    cd /vagrant
+    nohup /usr/local/bin/npm run-script local-server
+  SHELL
+  config.push.define "atlas" do |push|
+    push.app = "surtich/egn"
+  end
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
