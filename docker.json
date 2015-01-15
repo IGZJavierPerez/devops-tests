@@ -1,0 +1,68 @@
+{
+	"storage_path": "/tmp/egn",
+	"server_url": "http://localhost:3000",
+	"admin_url": "http://localhost:3001/admin",
+	"db": {
+		"conn": "mongodb://mongodb:27017/eagleninja"
+	},
+	"auth" : {
+		"cipherKey" : "zLUavqYVnk",
+		"firmKey" : "4JBsRDYx",
+		"host" : "http://localhost:3000",
+		"accessTokenExpirationMinutes" : 10,
+		"google" : {
+			"clientId" 		: "640792658286-e9sonba6ah32pkl9nv34k9pcpltgukup.apps.googleusercontent.com",
+			"clientSecret" 	: "XXqZ3HmdXKm9vj02it5CC8Qf",
+			"login" 		: "/auth/google",
+			"callback" 		: "/auth/google/callback",
+			"web_scopes"   	: ["profile","email"]
+		},
+		"facebook" : {
+			"clientId" 		: "420093308131684",
+			"clientSecret" 	: "59326eb3cf2b9bdad7faf2e6c9310873",
+			"login" 		: "/auth/facebook",
+			"callback" 		: "/auth/facebook/callback",
+			"web_scopes"   	: ["public_profile",
+							 	"email",
+							   	"user_birthday",
+							   	"user_relationships",
+							   	"user_location"
+							   	]
+		}
+	},
+	"redis": {
+		"host": "127.0.0.1",
+		"port": "6379",
+		"options": {}
+	},
+	"smtpTransport": {
+		"service": "Mailgun",
+		"auth": {
+			"user": "noreply@mail.eagleninja.com",
+			"pass": "5q$pOz9OScrrO4h%2Otro"
+		}
+	},
+	"paypal" : {
+		"sandbox"		: true,
+		"clientId" 		: "ASEV-RBRpfsQrvJq4QsKHfRrQxT2wdOq_BJNb5cUbttCOBLle05C3iFRUnTM",
+		"secret" 		: "EFkkExBltJiFCmFf2MTHuxe8krI0EUiVcerT3yszq5dp7oMS6-CwJRUsb7zx",
+		"redirect_uri" 	: "http://localhost:3000/fp/paypal/callback",
+		"payerAccount" 	: {
+			"email"		: "intelygenz-team@eagleninja.com",
+			"userId" 	: "angelsanchezroa_api1.gmail.com",
+			"password" 	: "1402325901",
+			"signature" : "AXK.89N9y67ze3vO9EOaNQQX0RVBA4X.t.6nZPIME0jOnD-uRT.ljJVJ"
+		}
+	},
+	"googleApiKey" : "AIzaSyDaSNgi3z4fYzJdD5egCvwQ17JxG_ZkLJo",
+    "apn" : {
+	    "pfx" : "com.igz.eagle_p12_DEV.p12",
+	    "passphrase" : "0123456789a.",
+	    "production" : false,
+		"notificationExpiry" : 3600,
+		"feedbackInterval" : 3600
+	},
+	"validation" : {
+		"validator" : "david.suarez@intelygenz.com"
+	}
+}
