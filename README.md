@@ -5,6 +5,8 @@
 [Install Docker](https://docs.docker.com/installation/)
 <br>
 [Install Docker Compose] (http://docs.docker.com/compose/install/)
+<br>
+[Allow execute Docker without root access](https://docs.docker.com/installation/ubuntulinux/#giving-non-root-access)
 
 ## Prepare
 
