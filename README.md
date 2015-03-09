@@ -6,6 +6,14 @@
 <br>
 [Install Docker Compose] (http://docs.docker.com/compose/install/)
 
+## Prepare
+
+```bash
+git clone https://github.com/IGZJavierPerez/devops-tests.git
+cd devops-tests/
+git checkout logstash
+```
+
 ## Compile docker images
 
 ```bash
