@@ -74,6 +74,7 @@ func readNumber(prompt string) (num int64) {
 		}
 		break
 	}
+	fmt.Println(num);
 	return
 }
 
