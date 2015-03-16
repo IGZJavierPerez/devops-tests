@@ -8,20 +8,8 @@ RUN \
     /opt/logstash-1.4.2/bin/plugin install contrib && \
     mkdir -p /etc/logstash
 
-RUN \ 
-    apt-get update && \
-    apt-get install -y golang
-    
-COPY lc-tlscert.go dat /opt/
-
-RUN \ 
-    cd /opt && \
-    go build lc-tlscert.go
-
 COPY logstash.conf /etc/logstash/
 
 COPY start.sh /opt/logstash-1.4.2/bin/
 
 CMD /opt/logstash-1.4.2/bin/start.sh
-
-EXPOSE 5000
