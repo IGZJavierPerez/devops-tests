@@ -8,23 +8,18 @@ kibana:
     - elasticsearch
   ports:
     - "5601:5601"
-rabbitmq:
-  image: rabbitmq:management
-  environment:
-    - RABBITMQ_NODENAME=my-rabbit
-  ports:
-    - "15672:15672"
 logstash:
   image: thegameofcode/logstash
   links:
     - elasticsearch
-    - "rabbitmq:rabbitmq-server"
   volumes:
     - "$PWD/logstash:/etc/logstash"
+  ports:
+    - "5556:5556"
 beaver:
   image: thegameofcode/beaver
   links:
-    - "rabbitmq:rabbitmq-server"
+    - "logstash:zeromq-server"
   volumes:
     - "/var/log/syslog:/data/log/system.log"
     - "$PWD/beaver:/etc/beaver"

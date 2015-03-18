@@ -44,12 +44,6 @@ docker-compose up --no-recreate kibana
 
 To check Kibana is working, open a browser and navigate to [http://localhost:5601/](http://localhost:5601/)
 
-Open a terminal and start a RabbitMQ container
-
-```bash
-docker-compose up rabbitmq
-```
-
 Open a terminal and start a Logstash container
 
 ```bash
@@ -75,11 +69,10 @@ If something went wrong you can try to:
 See the logs:
 
 ```bash
-docker logs elasticseach
-docker logs kibana
-docker logs rabbitmq
-docker logs logstash
-docker logs beaver
+docker logs test_elasticseach_1
+docker logs test_kibana_1
+docker logs test_logstash_1
+docker logs test_beaver_1
 ```
 
 Restart Docker service:
