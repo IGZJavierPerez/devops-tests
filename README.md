@@ -13,7 +13,7 @@
 ```bash
 git clone https://github.com/IGZJavierPerez/devops-tests.git
 cd devops-tests/
-git checkout logstash
+git checkout nginx+rsyslog+logstash
 ```
 
 ## Compile docker images
@@ -21,7 +21,7 @@ git checkout logstash
 ```bash
 docker build -t thegameofcode/kibana kibana/
 docker build -t thegameofcode/logstash logstash/
-docker build -t thegameofcode/beaver beaver/
+docker build -t thegameofcode/nginx nginx/
 ```
 
 ## Test
@@ -50,17 +50,17 @@ Open a terminal and start a Logstash container
 docker-compose up --no-recreate logstash
 ```
 
-Open a terminal and start a Beaver container
+Open a terminal and start a NGiNX container
 
 ```bash
-docker-compose up --no-recreate beaver
+docker-compose up --no-recreate nginx
 ```
 
-Now, you should see in Kibana the logs of the file `/var/log/syslog`
+Now, you should navigate to [http://localhost:80](http://localhost:80) and see the NGiNX in Kibana.
 
 ## Real implementation
 
-You can change the [Logstash server configuration](https://github.com/IGZJavierPerez/devops-tests/blob/logstash/test/logstash/logstash.conf) or the [Beaver](https://github.com/IGZJavierPerez/devops-tests/blob/beaver/test/beaver/beaver.conf) files. You can change them before the image compilation or you can pass a customized configuration file during the container creation. You need to update Beaver `volumes` section of the [docker-compose.yml](https://github.com/IGZJavierPerez/devops-tests/blob/logstash/test/docker-compose.yml) file to make accessible the configured logs of the host to the Docker container.
+You can change the [Logstash server configuration](https://github.com/IGZJavierPerez/devops-tests/blob/logstash/test/logstash/logstash.conf) or the [NGiNX](https://github.com/IGZJavierPerez/devops-tests/blob/beaver/test/nginx/nginx.conf) files. You can change them before the image compilation or you can pass a customized configuration file during the container creation. You need to update NGiNX `volumes` section of the [docker-compose.yml](https://github.com/IGZJavierPerez/devops-tests/blob/logstash/test/docker-compose.yml) file to make accessible NGiNX logs to the Docker container.
 
 ## Troubleshooting
 
@@ -72,7 +72,7 @@ See the logs:
 docker logs test_elasticseach_1
 docker logs test_kibana_1
 docker logs test_logstash_1
-docker logs test_beaver_1
+docker logs test_nginx_1
 ```
 
 Restart Docker service:
@@ -90,5 +90,5 @@ docker rm -f $(docker ps -a -q)
 Remove Docker's images and build again:
 
 ```bash
-docker rmi thegameofcode/logstash thegameofcode/kibana thegameofcode/beaver
+docker rmi thegameofcode/logstash thegameofcode/kibana thegameofcode/nginx
 ```
