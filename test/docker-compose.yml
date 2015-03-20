@@ -8,22 +8,9 @@ kibana:
     - elasticsearch
   ports:
     - "5601:5601"
-logstash:
-  image: thegameofcode/logstash
+ubuntu:
+  image: thegameofcode/ubuntu
   links:
-    - elasticsearch
+    - "elasticsearch:elasticsearch"
   volumes:
-    - "$PWD/logstash:/etc/logstash"
-  ports:
-    - "5544:5544"
-nginx:
-  image: thegameofcode/nginx
-  links:
-    - "logstash:logstash"
-  volumes:
-    - "/var/log/syslog:/data/log/system.log"
-    - "$PWD/nginx/nginx.conf:/etc/nginx/nginx.conf"
-    - "$PWD/nginx/nginx.log:/etc/nginx/nginx.log"
-    - "$PWD/nginx/45-nginx-access.conf:/etc/rsyslog.d/45-nginx-access.conf"
-  ports:
-    - "80:80"
+    - "$PWD/ubuntu/45-test.conf:/etc/rsyslog.d/45-test.conf"
