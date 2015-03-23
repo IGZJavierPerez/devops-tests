@@ -8,9 +8,14 @@ kibana:
     - elasticsearch
   ports:
     - "5601:5601"
-ubuntu:
+client:
+  image: thegameofcode/ubuntu
+  volumes:
+    - "$PWD/ubuntu-client/45-test.conf:/etc/rsyslog.d/45-test.conf"
+server:
   image: thegameofcode/ubuntu
   links:
     - "elasticsearch:elasticsearch"
+    - "client:client"
   volumes:
-    - "$PWD/ubuntu/45-test.conf:/etc/rsyslog.d/45-test.conf"
+    - "$PWD/ubuntu-server/45-test.conf:/etc/rsyslog.d/45-test.conf"

@@ -43,13 +43,31 @@ docker-compose up --no-recreate kibana
 
 To check Kibana is working, open a browser and navigate to [http://localhost:5601/](http://localhost:5601/)
 
-Open a terminal and start a Ubuntu container
+Open a terminal and start a Ubuntu Client container
 
 ```bash
-docker-compose up --no-recreate ubuntu
+docker-compose up --no-recreate client
 ```
 
-Now, you see the Ubuntu container logs in Kibana dashboard.
+Open a terminal and start a Ubuntu Server container
+
+```bash
+docker-compose up --no-recreate server
+```
+
+Connect to the client container:
+
+```bash
+docker exec -it test_client_1 bash
+```
+
+Write some logs:
+
+```bash
+logger "Log test"
+```
+
+Now, you should see the Ubuntu Client container logs in Kibana dashboard.
 
 ## Troubleshooting
 
@@ -60,7 +78,8 @@ See the logs:
 ```bash
 docker logs test_elasticseach_1
 docker logs test_kibana_1
-docker logs test_ubuntu_1
+docker logs test_client_1
+docker logs test_server_1
 ```
 
 Restart Docker service:
