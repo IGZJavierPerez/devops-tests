@@ -10,8 +10,14 @@ kibana:
     - "5601:5601"
 client:
   image: thegameofcode/ubuntu
+  links:
+    - "bunyan:bunyan"
   volumes:
     - "$PWD/ubuntu-client/45-test.conf:/etc/rsyslog.d/45-test.conf"
+  volumes_from:
+    - bunyan
+  expose:
+    - "11514:11514"
 server:
   image: thegameofcode/ubuntu
   links:
@@ -19,3 +25,9 @@ server:
     - "client:client"
   volumes:
     - "$PWD/ubuntu-server/45-test.conf:/etc/rsyslog.d/45-test.conf"
+bunyan:
+  image: thegameofcode/bunyan
+  volumes:
+    - "$PWD/bunyan/test.js:/test.js"
+    - "$PWD/bunyan/buyan.log:/var/log/bunyan.log"
+  command: bash -c "echo -n > /var/log/bunyan.log && (node /test.js &) && tail -f /var/log/bunyan.log"

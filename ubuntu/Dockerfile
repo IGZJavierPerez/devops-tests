@@ -25,7 +25,7 @@ WORKDIR /root
 RUN \
     sudo add-apt-repository ppa:adiscon/v8-stable && \
     sudo apt-get update && \
-    sudo apt-get install -y pkg-config build-essential autoconf automake libjson0 libjson0-dev libestr0 libestr-dev zlibc zlib1g zlib1g-dev uuid-dev libgcrypt20-dev liblogging-stdlog1 liblogging-stdlog-dev
+    sudo apt-get install -y pkg-config build-essential autoconf automake libjson0 libjson0-dev libestr0 libestr-dev zlibc zlib1g zlib1g-dev uuid-dev libgcrypt20-dev liblogging-stdlog1 liblogging-stdlog-dev liblognorm1 liblognorm1-dev
 
 RUN \
     cd /opt && \
@@ -53,7 +53,7 @@ RUN \
     cd /opt && \
     curl http://www.rsyslog.com/files/download/rsyslog/rsyslog-8.8.0.tar.gz | tar zxv && \
     cd rsyslog-8.8.0 && \
-    ./configure --enable-omzmq3 --enable-imzmq3 --enable-elasticsearch --disable-generate-man-pages --prefix=/usr && \
+    ./configure --enable-omzmq3 --enable-imzmq3 --enable-elasticsearch --enable-imfile --enable-mmjsonparse --disable-generate-man-pages --prefix=/usr && \
     make && \
     make install
 
