@@ -1,0 +1,8 @@
+[1427752886] SERVICE ALERT: localhost;Root Partition;CRITICAL;HARD;4;DISK CRITICAL - free space: / 28004 MB (6% inode=92%):
+[1427752886] SERVICE NOTIFICATION: nagiosadmin;localhost;Root Partition;CRITICAL;notify-service-by-email;DISK CRITICAL - free space: / 28004 MB (6% inode=92%):
+[1427752886] wproc: NOTIFY job 3 from worker Core Worker 60 is a non-check helper but exited with return code 127
+[1427752886] wproc:   host=localhost; service=Root Partition; contact=nagiosadmin
+[1427752886] wproc:   early_timeout=0; exited_ok=1; wait_status=32512; error_code=0;
+[1427752886] wproc:   stderr line 01: /bin/sh: 1: /bin/mail: not found
+[1427752886] wproc:   stderr line 02: /usr/bin/printf: write error: Broken pipe
+[1427752924] SERVICE ALERT: localhost;SSH;CRITICAL;HARD;4;connect to address 127.0.0.1 and port 22: Connection refused

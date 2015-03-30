@@ -11,11 +11,11 @@ kibana:
 client:
   image: thegameofcode/ubuntu
   links:
-    - "bunyan:bunyan"
+    - "nagios:nagios"
   volumes:
     - "$PWD/ubuntu-client/45-test.conf:/etc/rsyslog.d/45-test.conf"
   volumes_from:
-    - bunyan
+    - nagios
   expose:
     - "11514:11514"
 server:
@@ -25,9 +25,11 @@ server:
     - "client:client"
   volumes:
     - "$PWD/ubuntu-server/45-test.conf:/etc/rsyslog.d/45-test.conf"
-bunyan:
-  image: thegameofcode/bunyan
+nagios:
+  image: thegameofcode/nagios
   volumes:
-    - "$PWD/bunyan/test.js:/test.js"
-    - "$PWD/bunyan/buyan.log:/var/log/bunyan.log"
-  command: bash -c "echo -n > /var/log/bunyan.log && (node /test.js &) && tail -f /var/log/bunyan.log"
+    - "$PWD/nagios/htpasswd.users:/usr/local/nagios/etc/htpasswd.users"
+    - "$PWD/nagios/nagios.cfg:/usr/local/nagios/etc/nagios.cfg"
+    - "$PWD/nagios/nagios.log:/usr/local/nagios/var/nagios.log"
+  ports:
+    - "80:80"

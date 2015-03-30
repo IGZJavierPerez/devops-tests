@@ -1,0 +1,107 @@
+FROM ubuntu:14.04
+
+# Install.
+RUN \
+    sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
+    apt-get update && \
+    apt-get -y upgrade && \
+    apt-get install -y build-essential && \
+    apt-get install -y software-properties-common && \
+    apt-get install -y byobu curl git htop man unzip vim wget && \
+    rm -rf /var/lib/apt/lists/*
+
+# Add files.
+ADD root/.bashrc /root/.bashrc
+ADD root/.gitconfig /root/.gitconfig
+ADD root/.scripts /root/.scripts
+ADD root/.profile /root/.profile
+
+# Set environment variables.
+ENV HOME /root
+
+# Define working directory.
+WORKDIR /root
+
+RUN \
+	apt-get update && \
+	apt-get install -y apache2 libapache2-mod-php5
+
+RUN \
+	apt-get install -y libgd2-xpm-dev
+
+RUN \
+	/usr/sbin/useradd -m -s /bin/bash nagios && \
+	/usr/sbin/groupadd nagcmd && \
+	/usr/sbin/usermod -a -G nagcmd nagios && \
+	/usr/sbin/usermod -a -G nagcmd www-data
+
+RUN \
+    cd /opt && \
+    curl http://softlayer-ams.dl.sourceforge.net/project/nagios/nagios-4.x/nagios-4.0.8/nagios-4.0.8.tar.gz | tar zxv && \
+    cd nagios-4.0.8 && \
+    ./configure --with-command-group=nagcmd && \
+    make all && \
+    make install && \
+    make install-init && \
+    make install-config && \
+    make install-commandmode
+
+RUN \
+	/usr/bin/install -c -m 644 /opt/nagios-4.0.8/sample-config/httpd.conf /etc/apache2/sites-enabled/nagios.conf
+
+RUN \
+    cd /opt && \
+    curl  http://nagios-plugins.org/download/nagios-plugins-2.0.3.tar.gz | tar zxv && \
+    cd nagios-plugins-2.0.3 && \
+    ./configure --with-nagios-user=nagios --with-nagios-group=nagios && \
+    make && \
+    make install
+
+ RUN  \
+ 	apt-get install apache2-utils
+ 	
+ RUN \
+  a2enmod cgi
+
+
+RUN \
+    sudo add-apt-repository ppa:adiscon/v8-stable && \
+    sudo apt-get update && \
+    sudo apt-get install -y pkg-config build-essential autoconf automake libjson0 libjson0-dev libestr0 libestr-dev zlibc zlib1g zlib1g-dev uuid-dev libgcrypt20-dev liblogging-stdlog1 liblogging-stdlog-dev liblognorm1 liblognorm1-dev
+
+RUN \
+    cd /opt && \
+    curl http://download.zeromq.org/zeromq-3.2.5.tar.gz | tar zxv && \
+    cd zeromq-3.2.5 && \
+    ./configure && \
+    make && \
+    make install
+
+RUN \
+    apt-get install -y libjansson-dev
+
+RUN \
+    apt-get install -y libpcre3 libpcre3-dev
+
+RUN  \
+	apt-get -y install libev-dev
+
+RUN \
+	apt-get -y install python-zmq
+
+RUN \
+	apt-get -y install libtool
+
+RUN \
+	cd /opt && \
+	git clone https://github.com/jbreams/nagmq.git
+
+RUN \
+	cd /opt/nagmq && \
+	sed -i '1s/^/#include <stdint.h>\n/' ./mods/socketstatus.c && \
+	autoreconf -i && \
+	./configure --with-nagios4-src=/opt/nagios-4.0.8 && \
+	make && \
+	make install
+
+CMD service apache2 start && service nagios start && tail -f /var/log/apache2/access.log

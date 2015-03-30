@@ -13,7 +13,7 @@
 ```bash
 git clone https://github.com/IGZJavierPerez/devops-tests.git
 cd devops-tests/
-git checkout nginx+rsyslog+logstash
+git checkout  rsyslog+nagios
 ```
 
 ## Compile docker images
@@ -21,7 +21,7 @@ git checkout nginx+rsyslog+logstash
 ```bash
 docker build -t thegameofcode/kibana kibana/
 docker build -t thegameofcode/ubuntu ubuntu/
-docker build -t thegameofcode/bunyan buyan/
+docker build -t thegameofcode/nagios nagios/
 ```
 
 ## Test
@@ -44,13 +44,13 @@ docker-compose up --no-recreate kibana
 
 To check Kibana is working, open a browser and navigate to [http://localhost:5601/](http://localhost:5601/)
 
-Open a terminal and start a Bunyan container
+Open a terminal and start a Nagios container
 
 ```bash
-docker-compose up --no-recreate bunyan
+docker-compose up --no-recreate nagios
 ```
 
-This starts a Node app that creates an infinite random Bunyan log.
+Check Nagios is working (user=nagiosadmin password=nagios) [http://localhost:80/nagios](http://localhost:80/nagios).
 
 
 Open a terminal and start a Ubuntu RSYSLOG Client container
@@ -59,7 +59,7 @@ Open a terminal and start a Ubuntu RSYSLOG Client container
 docker-compose up --no-recreate client
 ```
 
-This uses RSYSLOG to read the Buyan log and send to ZeroMQ queue
+This uses RSYSLOG to read the Nagios log and send it to a ZeroMQ queue
 
 Open a terminal and start a Ubuntu RSYSLOG Server container
 
@@ -69,7 +69,7 @@ docker-compose up --no-recreate server
 
 This uses RSYSLOG to read the ZeroMQ queue and send it to ElasticSearch
 
-Now, you should see the Buyan logs in Kibana dashboard.
+Now, you should see the Nagios logs in Kibana dashboard.
 
 ## Troubleshooting
 
@@ -82,7 +82,7 @@ docker logs test_elasticseach_1
 docker logs test_kibana_1
 docker logs test_server_1
 docker logs test_client_1
-docker logs test_server_1
+docker logs test_nagios_1
 ```
 
 Restart Docker service:
@@ -100,5 +100,5 @@ docker rm -f $(docker ps -a -q)
 Remove Docker's images and build again:
 
 ```bash
-docker rmi thegameofcode/kibana thegameofcode/ubuntu thegameofcode/bunyan
+docker rmi thegameofcode/kibana thegameofcode/ubuntu thegameofcode/nagios
 ```
