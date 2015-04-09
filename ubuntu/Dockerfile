@@ -57,4 +57,4 @@ RUN \
     make && \
     make install
 
-CMD service rsyslog start && sleep 3 && tail -f /var/log/syslog
+CMD service rsyslog start && touch /var/log/syslog && tail -f /var/log/syslog

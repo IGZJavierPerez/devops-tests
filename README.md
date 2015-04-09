@@ -52,6 +52,13 @@ docker-compose up --no-recreate bunyan
 
 This starts a Node app that creates an infinite random Bunyan log.
 
+Open a terminal and start a Ubuntu RSYSLOG Server container
+
+```bash
+docker-compose up --no-recreate server
+```
+
+This uses RSYSLOG to star the ZeroMQ queue (PULL-PUSH) and send it to ElasticSearch
 
 Open a terminal and start a Ubuntu RSYSLOG Client container
 
@@ -59,15 +66,8 @@ Open a terminal and start a Ubuntu RSYSLOG Client container
 docker-compose up --no-recreate client
 ```
 
-This uses RSYSLOG to read the Buyan log and send to ZeroMQ queue
+This uses RSYSLOG to read the Buyan log and PUSH to ZeroMQ queue
 
-Open a terminal and start a Ubuntu RSYSLOG Server container
-
-```bash
-docker-compose up --no-recreate server
-```
-
-This uses RSYSLOG to read the ZeroMQ queue and send it to ElasticSearch
 
 Now, you should see the Buyan logs in Kibana dashboard.
 

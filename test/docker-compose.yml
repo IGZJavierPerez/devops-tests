@@ -12,6 +12,7 @@ client:
   image: thegameofcode/ubuntu
   links:
     - "bunyan:bunyan"
+    - "server:server"
   volumes:
     - "$PWD/ubuntu-client/45-test.conf:/etc/rsyslog.d/45-test.conf"
   volumes_from:
@@ -22,7 +23,6 @@ server:
   image: thegameofcode/ubuntu
   links:
     - "elasticsearch:elasticsearch"
-    - "client:client"
   volumes:
     - "$PWD/ubuntu-server/45-test.conf:/etc/rsyslog.d/45-test.conf"
 bunyan:
