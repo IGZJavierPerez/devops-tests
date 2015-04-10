@@ -30,6 +30,8 @@ nagios:
   volumes:
     - "$PWD/nagios/htpasswd.users:/usr/local/nagios/etc/htpasswd.users"
     - "$PWD/nagios/nagios.cfg:/usr/local/nagios/etc/nagios.cfg"
+    - "$PWD/nagios/commands.cfg:/usr/local/nagios/etc/objects/commands.cfg"
+    - "$PWD/nagios/templates.cfg:/usr/local/nagios/etc/objects/templates.cfg"
     - "$PWD/nagios/nagios.log:/usr/local/nagios/var/nagios.log"
   ports:
     - "80:80"

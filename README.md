@@ -51,6 +51,7 @@ docker-compose up --no-recreate nagios
 ```
 
 Check Nagios is working (user=nagiosadmin password=nagios) [http://localhost:80/nagios](http://localhost:80/nagios).
+Check PNP4Nagios is working [http://localhost/pnp4nagios](http://localhost/pnp4nagios)
 
 
 Open a terminal and start a Ubuntu RSYSLOG Client container

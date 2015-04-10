@@ -63,4 +63,16 @@ RUN \
  RUN \
   a2enmod cgi
 
-CMD service apache2 start && service nagios start && touch /usr/local/nagios/var/nagios.log && tail -f /usr/local/nagios/var/nagios.log
+RUN \
+    apt-get install -y rrdtool librrdtool-oo-perl
+
+ RUN \
+    cd /opt && \
+    curl http://vorboss.dl.sourceforge.net/project/pnp4nagios/PNP-0.6/pnp4nagios-0.6.25.tar.gz | tar zxv && \
+    cd pnp4nagios-0.6.25 && \
+    ./configure --with-httpd-conf=/etc/apache2/conf-enabled && \
+    make all && \
+    make fullinstall && \
+    rm -rf /usr/local/pnp4nagios/share/install.php
+
+CMD service npcd start && service nagios start && service apache2 start && touch /usr/local/nagios/var/nagios.log && tail -f /usr/local/nagios/var/nagios.log
