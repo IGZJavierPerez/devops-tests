@@ -13,18 +13,19 @@ client:
   links:
     - "nagios:nagios"
   volumes:
-    - "$PWD/ubuntu-client/45-test.conf:/etc/rsyslog.d/45-test.conf"
+    - "$PWD/ubuntu-client/50-nagios-json.conf:/etc/rsyslog.d/50-nagios-json.conf"
   volumes_from:
     - nagios
   expose:
     - "11514:11514"
+    - "11515:11515"
 server:
   image: thegameofcode/ubuntu
   links:
     - "elasticsearch:elasticsearch"
     - "client:client"
   volumes:
-    - "$PWD/ubuntu-server/45-test.conf:/etc/rsyslog.d/45-test.conf"
+    - "$PWD/ubuntu-server/50-nagios-json.conf:/etc/rsyslog.d/50-nagios-json.conf"
 nagios:
   image: thegameofcode/nagios
   volumes:
@@ -33,5 +34,6 @@ nagios:
     - "$PWD/nagios/commands.cfg:/usr/local/nagios/etc/objects/commands.cfg"
     - "$PWD/nagios/templates.cfg:/usr/local/nagios/etc/objects/templates.cfg"
     - "$PWD/nagios/nagios.log:/usr/local/nagios/var/nagios.log"
+    - "$PWD/nagios/test.log:/usr/local/nagios/var/test.log"
   ports:
     - "80:80"
