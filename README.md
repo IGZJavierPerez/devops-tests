@@ -13,7 +13,7 @@
 ```bash
 git clone https://github.com/IGZJavierPerez/devops-tests.git
 cd devops-tests/
-git checkout nginx+rsyslog+logstash
+git checkout rsyslog+elasticsearch
 ```
 
 ## Compile docker images
